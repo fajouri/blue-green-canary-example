@@ -1,0 +1,19 @@
+name: CI/CD
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build v1 image
+        run: docker build -t blue-green-v1 ./app/v1
+      - name: Build v2 image
+        run: docker build -t blue-green-v2 ./app/v2
+      - name: Build nginx image
+        run: docker build -t blue-green-nginx ./nginx
